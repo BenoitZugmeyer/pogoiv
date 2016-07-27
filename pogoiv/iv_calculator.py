@@ -10,9 +10,9 @@ class IvCalculator:
         self.base_stats = base_stats.BaseStats()
         self.level_dust_costs = level_dust_costs.LevelDustCosts()
 
-    def get_ivs(self, pokemon_name, current_cp, current_health, dust_to_upgrade, powered=False):
+    def get_ivs(self, pokemon, current_cp, current_health, dust_to_upgrade, powered=False):
         """
-        :param string pokemon_name: name of a Pokemon.
+        :param integer|string pokemon: id or name of a Pokemon.
         :param integer current_cp: CP of Pokemon visible in game client.
         :param integer current_health: Health of Pokemon visible in game client.
         :param integer dust_to_upgrade: Amount of dust to buy the next powerup to the Pokemon visible in the game client.
@@ -26,8 +26,8 @@ class IvCalculator:
                     'perfection': float - 0.0 - 100.0
                 }
         """
-        self._validate_inputs(pokemon_name, current_cp, current_health, dust_to_upgrade, powered)
-        base_stats = self.base_stats.get_base_stats(pokemon_name)
+        self._validate_inputs(pokemon, current_cp, current_health, dust_to_upgrade, powered)
+        base_stats = self.base_stats.get_base_stats(pokemon)
         base_atk = base_stats[self.base_stats.BASE_ATTACK]
         base_def = base_stats[self.base_stats.BASE_DEFENSE]
         base_stam = base_stats[self.base_stats.BASE_STAMINA]
@@ -77,10 +77,10 @@ class IvCalculator:
 
         return possible_stats
 
-    def get_ivs_across_powerups(self, pokemon_name, powerup_stats):
+    def get_ivs_across_powerups(self, pokemon, powerup_stats):
         """
         Returns all possible ivs for the given Pokemon and series of client facing stats for that Pokemon.
-        :param string pokemon_name: name of a Pokemon.
+        :param integer|string pokemon: id or name of a Pokemon.
         :param list<tuple> powerup_stats: List of tuples of the form:
                 (integer current_cp, integer current_health, integer dust_to_upgrade, boolean powered)
                 each representing the input stats for a pokemon at a given level.
@@ -97,7 +97,7 @@ class IvCalculator:
         for stats in powerup_stats:
             current_cp, current_health, dust_to_upgrade, powered = stats
             ivs = self.get_ivs(
-                pokemon_name=pokemon_name,
+                pokemon=pokemon,
                 current_cp=current_cp,
                 current_health=current_health,
                 dust_to_upgrade=dust_to_upgrade,
@@ -148,8 +148,8 @@ class IvCalculator:
             perfection=poke_dict[IvStats.PERFECTION_PERCENTAGE]
         ) for poke_dict in result_list]
 
-    def _validate_inputs(self, pokemon_name, current_cp, current_health, dust_to_upgrade, powered):
-        self.base_stats.validate_pokemon(pokemon_name)
+    def _validate_inputs(self, pokemon, current_cp, current_health, dust_to_upgrade, powered):
+        self.base_stats.validate_pokemon(pokemon)
         self.level_dust_costs.validate_dust_cost(dust_to_upgrade)
         if not isinstance(current_cp, int):
             raise poke_data_error.PokeDataError("Input CP was not an integer: {}".format(current_cp))

@@ -36,7 +36,7 @@ class TestIv(unittest.TestCase):
     def test_calculate_iv_eevee(self):
         calculator = IvCalculator()
         result = calculator.get_ivs(
-            pokemon_name='Eevee',
+            pokemon='Eevee',
             current_cp=320,
             current_health=49,
             dust_to_upgrade=1300,
@@ -47,7 +47,7 @@ class TestIv(unittest.TestCase):
     def test_get_ivs_slowbro(self):
         calculator = IvCalculator()
         actual = calculator.get_ivs(
-            pokemon_name='Slowbro',
+            pokemon='Slowbro',
             current_cp=1528,
             current_health=125,
             dust_to_upgrade=3000,
@@ -58,7 +58,7 @@ class TestIv(unittest.TestCase):
     def test_get_ivs_slowbro_across_powerups(self):
         calculator = IvCalculator()
         actual = calculator.get_ivs_across_powerups(
-            pokemon_name='Slowbro',
+            pokemon='Slowbro',
             powerup_stats=[(1528, 125, 3000, True), (1564, 126, 3000, True)]
         )
         self._compare_result_lists(self.slowbro_data_t2, actual)

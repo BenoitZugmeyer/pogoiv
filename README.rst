@@ -35,7 +35,7 @@ Library:
 
     >>> from pogoiv.iv_calculator import IvCalculator
     >>> calculator = IvCalculator()
-    >>> calculator.get_ivs_across_powerups(pokemon_name='Slowbro', powerup_stats=[(1528, 125, 3000, True), (1564, 126, 3000, True)])
+    >>> calculator.get_ivs_across_powerups(pokemon='Slowbro', powerup_stats=[(1528, 125, 3000, True), (1564, 126, 3000, True)])
     [{'level': 21.5, 'atk_iv': 13, 'def_iv': 11, 'stam_iv': 15, 'perfection': 86.7}, {'level': 21.5, 'atk_iv': 14, 'def_iv': 9, 'stam_iv': 15, 'perfection': 84.4}, {'level': 22.0, 'atk_iv': 9, 'def_iv': 13, 'stam_iv': 12, 'perfection': 75.6}]
 
 CLI:
